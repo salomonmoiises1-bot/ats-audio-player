@@ -4,15 +4,27 @@
  android:layout_height="match_parent"
  android:orientation="vertical"
  android:background="#121212">
+<androidx.appcompat.widget.SearchView
+ android:id="@+id/searchView"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:background="#222"/>
 <androidx.recyclerview.widget.RecyclerView
- android:id="@+id/recyclerView"
+ android:id="@+id/rvSongs"
  android:layout_width="match_parent"
  android:layout_height="0dp"
  android:layout_weight="1"/>
-<LinearLayout android:layout_width="match_parent" android:layout_height="64dp" android:orientation="horizontal" android:background="#222" android:gravity="center_vertical" android:padding="8dp">
+<LinearLayout
+ android:id="@+id/miniPlayerContainer"
+ android:layout_width="match_parent"
+ android:layout_height="64dp"
+ android:orientation="horizontal"
+ android:background="#222"
+ android:gravity="center_vertical"
+ android:padding="8dp">
 <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-<TextView android:id="@+id/miniTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FFF" android:text="Title" android:maxLines="1"/>
-<TextView android:id="@+id/miniArtist" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#AAA" android:text="Artist" android:maxLines="1"/>
+<TextView android:id="@+id/miniTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FFF" android:maxLines="1" android:text="Title"/>
+<TextView android:id="@+id/miniArtist" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#AAA" android:maxLines="1" android:text="Artist"/>
 </LinearLayout>
 <ImageView android:id="@+id/miniPlayPause" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_play"/>
 </LinearLayout>
