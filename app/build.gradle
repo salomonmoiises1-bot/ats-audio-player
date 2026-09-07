@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.media3:media3-extractor:1.2.1'
 
     // Guava para ListenableFuture MediaController
-    implementation 'com.google.common.util.concurrent:ListenableFuture:1.0'
+        implementation 'com.google.guava:listenablefuture:1.0'
     implementation 'com.google.guava:guava:33.0.0-android'
 
     // Testing
