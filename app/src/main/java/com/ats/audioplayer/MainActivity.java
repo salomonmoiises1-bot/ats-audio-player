@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.ContentUris;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.audiofx.DynamicsProcessing;
+import android.media.audiofx.Equalizer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView miniTitle, miniArtist;
     private ImageView miniPlayPause;
 
+    private Equalizer mEqualizer;
+    private DynamicsProcessing mDynamics;
+    private int audioSessionId = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("title", song.getTitle());
             i.putExtra("artist", song.getArtist());
             i.putExtra("path", song.getPath());
+            i.putExtra("sessionId", audioSessionId);
             startService(i);
             miniTitle.setText(song.getTitle());
             miniArtist.setText(song.getArtist());
@@ -55,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String q) { return false; }
-            @Override public boolean onQueryTextChange(String newText) {
-                filter(newText);
-                return true;
-            }
+            @Override public boolean onQueryTextChange(String newText) { filter(newText); return true; }
         });
 
         checkPermission();
@@ -69,13 +73,61 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
         } else {
             loadSongs();
+            initAudioEffects();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==100) loadSongs();
+        if(requestCode==100){ loadSongs(); initAudioEffects(); }
+    }
+
+    private void initAudioEffects(){
+        try {
+            if(audioSessionId==0) audioSessionId = 0;
+            mEqualizer = new Equalizer(0, audioSessionId);
+            mEqualizer.setEnabled(true);
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P){
+                mDynamics = new DynamicsProcessing(0, audioSessionId,
+                    new DynamicsProcessing.Config.Builder(0, 2, true, 32, true, 5, true, 5, true).build());
+                mDynamics.setEnabled(true);
+            }
+        } catch(Exception e){ e.printStackTrace(); }
+    }
+
+    // --- ESTO ES LO QUE TE PIDE MDRCAdapter ---
+    public void setMDRCParam(int band, String param, float val){
+        try {
+            if(mDynamics==null) return;
+            DynamicsProcessing.Config cfg = mDynamics.getConfig();
+            DynamicsProcessing.Channel ch = cfg.getChannelByChannelIndex(0);
+            DynamicsProcessing.Mbc mbc = ch.getMbc();
+            DynamicsProcessing.MbcBand b = mbc.getBandByChannelIndex(band);
+            switch(param){
+                case "gain": b.setPostGain(val); break;
+                case "threshold": b.setThreshold(val); break;
+                case "ratio": b.setRatio(val); break;
+                case "attack": b.setAttackTime(val); break;
+                case "release": b.setReleaseTime(val); break;
+                case "knee": b.setKneeWidth(val); break;
+            }
+            mDynamics.setMbcBandByChannelIndex(0, band, b);
+        } catch(Exception e){ e.printStackTrace(); }
+    }
+
+    // --- ESTO ES LO QUE TE PIDE Eq32Adapter ---
+    public void setBandGain(int position, float gain){
+        try {
+            if(mEqualizer!=null){
+                short band = (short) position;
+                short level = (short) (gain * 100);
+                mEqualizer.setBandLevel(band, level);
+            }
+        } catch(Exception e){ e.printStackTrace(); }
+    }
+    public void setBandGain(int position, float f, float newGain){
+        setBandGain(position, newGain);
     }
 
     private void loadSongs(){
@@ -100,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         }
         filteredList.clear();
         filteredList.addAll(songList);
-        adapter.notifyDataSetChanged();
+        if(adapter!=null) adapter.notifyDataSetChanged();
     }
 
     private void filter(String text){
@@ -115,6 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+        if(adapter!=null) adapter.notifyDataSetChanged();
     }
 }
