@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ATS Audio Player</string>
+    <string name="open_player">Abrir reproductor</string>
+    <string name="album_art">Carátula del álbum</string>
+    <string name="play_pause">Reproducir / Pausa</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Siguiente</string>
+    <string name="shuffle">Aleatorio</string>
+    <string name="repeat">Repetir</string>
+    <string name="volume">Volumen</string>
+    <string name="now_playing">Reproduciendo Ahora</string>
+    <string name="back">Atrás</string>
+    <string name="no_song_playing">Sin reproducción activa</string>
+    <string name="select_a_track">Toca una canción para iniciar</string>
+</resources>

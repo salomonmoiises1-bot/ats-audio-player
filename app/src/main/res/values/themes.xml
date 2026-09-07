@@ -1,0 +1,19 @@
+<resources>
+    <style name="Theme.ATSAudioPlayer" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/cyan_accent</item>
+        <item name="colorSecondary">@color/purple_accent</item>
+        <item name="android:windowBackground">@color/bg_main</item>
+        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:navigationBarColor">@color/bg_main</item>
+    </style>
+
+    <style name="ThemeOverlay.SearchView" parent="ThemeOverlay.Material3.Dark">
+        <item name="android:textColorHint">#808080</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="colorAccent">@color/cyan_accent</item>
+    </style>
+
+    <style name="ShapeAppearance.Corner8dp" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+</resources>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMdrcBand"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:cardBackgroundColor="#161922"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeColor="#252936"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Header: Band Name & Switch Enable -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bandName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SUB BASS"
+                android:textColor="#00E5FF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/swEnable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+        </LinearLayout>
+
+        <!-- Gain Reduction Meter -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="GR Meter"
+                android:textColor="#9E9E9E"
+                android:textSize="11sp" />
+
+            <ProgressBar
+                android:id="@+id/gainReduction"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="15"
+                android:progressDrawable="@drawable/bg_meter_progress" />
+
+            <TextView
+                android:id="@+id/txtGainReductionVal"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="-2.5 dB"
+                android:textColor="#FF5252"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Controles de Parámetros MDRC -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <!-- Columna 1: Cutoff, Gain, Threshold, Ratio -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Cutoff (20-20000Hz) -->
+                <TextView
+                    android:id="@+id/lblCutoff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cutoff: 120 Hz"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skCutoff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="10"
+                    android:progressTint="#00E5FF"
+                    android:thumbTint="#00E5FF" />
+
+                <!-- Gain (-6 a +6 dB) -->
+                <TextView
+                    android:id="@+id/lblGain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Gain: +2.5 dB"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skGain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="120"
+                    android:progress="85"
+                    android:progressTint="#00E5FF"
+                    android:thumbTint="#00E5FF" />
+
+                <!-- Threshold (-60 a 0 dB) -->
+                <TextView
+                    android:id="@+id/lblThreshold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Thresh: -20 dB"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skThreshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="60"
+                    android:progress="40"
+                    android:progressTint="#00E5FF"
+                    android:thumbTint="#00E5FF" />
+
+                <!-- Ratio (1-10) -->
+                <TextView
+                    android:id="@+id/lblRatio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Ratio: 2.5 : 1"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skRatio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="90"
+                    android:progress="15"
+                    android:progressTint="#00E5FF"
+                    android:thumbTint="#00E5FF" />
+
+            </LinearLayout>
+
+            <!-- Columna 2: Attack, Release, Knee -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Attack (1-100 ms) -->
+                <TextView
+                    android:id="@+id/lblAttack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attack: 25 ms"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skAttack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="99"
+                    android:progress="24"
+                    android:progressTint="#7C4DFF"
+                    android:thumbTint="#7C4DFF" />
+
+                <!-- Release (20-500 ms) -->
+                <TextView
+                    android:id="@+id/lblRelease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Release: 180 ms"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skRelease"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="480"
+                    android:progress="160"
+                    android:progressTint="#7C4DFF"
+                    android:thumbTint="#7C4DFF" />
+
+                <!-- Knee (0-12 dB) -->
+                <TextView
+                    android:id="@+id/lblKnee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Knee: 6 dB"
+                    android:textColor="#CCCCCC"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/skKnee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="120"
+                    android:progress="60"
+                    android:progressTint="#7C4DFF"
+                    android:thumbTint="#7C4DFF" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
