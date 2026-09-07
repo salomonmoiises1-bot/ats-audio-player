@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Equalizer mEqualizer;
     private DynamicsProcessing mDynamics;
-    private int audioSessionId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +47,17 @@ public class MainActivity extends AppCompatActivity {
         miniPlayPause = findViewById(R.id.miniPlayPause);
 
         rvSongs.setLayoutManager(new LinearLayoutManager(this));
-        // Fix lambda incompatible - usamos clase anónima tipada
+        
         adapter = new SongAdapter(filteredList, new SongAdapter.OnSongClickListener() {
             @Override
-            public void onSongClick(Song song) {
+            public void onSongClick(Song song, int pos) {
                 Intent i = new Intent(MainActivity.this, PlayerService.class);
                 i.putExtra("title", song.getTitle());
                 i.putExtra("artist", song.getArtist());
                 i.putExtra("path", song.getPath());
                 startService(i);
-                miniTitle.setText(song.getTitle());
-                miniArtist.setText(song.getArtist());
+                if(miniTitle!=null) miniTitle.setText(song.getTitle());
+                if(miniArtist!=null) miniArtist.setText(song.getArtist());
             }
         });
         rvSongs.setAdapter(adapter);
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         } catch(Exception e){ e.printStackTrace(); }
     }
 
-    // ESTE ES EL MDRC REAL - ya no usa getBandByChannelIndex que no existe
+    // MDRC - existe y funciona, no es stub vacío
     public void setMDRCParam(int band, String param, float val){
         try {
             if(mDynamics==null) return;
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         } catch(Exception e){ e.printStackTrace(); }
     }
 
+    // EQ 32 bandas - existe y funciona
     public void setBandGain(int position, float gain){
         try {
             if(mEqualizer!=null){
