@@ -4,12 +4,18 @@
  android:layout_height="match_parent"
  android:orientation="vertical"
  android:padding="24dp"
- android:background="#121212">
-<TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FFF" android:textSize="20sp" android:text="Title"/>
-<TextView android:id="@+id/tvArtist" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#AAA" android:textSize="14sp" android:text="Artist"/>
-<SeekBar android:id="@+id/seekBar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp"/>
-<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+ android:background="#121212"
+ android:gravity="center">
+<TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FFF" android:textSize="20sp" android:textStyle="bold" android:gravity="center" android:text="Title"/>
+<TextView android:id="@+id/tvArtist" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#AAA" android:textSize="14sp" android:gravity="center" android:text="Artist" android:layout_marginTop="4dp"/>
+<SeekBar android:id="@+id/seekBar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp"/>
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="8dp">
 <TextView android:id="@+id/tvCurrentTime" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="#FFF" android:text="00:00"/>
 <TextView android:id="@+id/tvTotalTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF" android:text="00:00"/>
+</LinearLayout>
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginTop="32dp">
+<ImageView android:id="@+id/btnPrev" android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/ic_skip_previous"/>
+<ImageView android:id="@+id/btnPlayPause" android:layout_width="80dp" android:layout_height="80dp" android:src="@drawable/ic_play" android:layout_marginHorizontal="24dp"/>
+<ImageView android:id="@+id/btnNext" android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/ic_skip_next"/>
 </LinearLayout>
 </LinearLayout>
