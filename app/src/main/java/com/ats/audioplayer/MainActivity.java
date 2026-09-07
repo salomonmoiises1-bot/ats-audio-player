@@ -48,15 +48,18 @@ public class MainActivity extends AppCompatActivity {
         miniPlayPause = findViewById(R.id.miniPlayPause);
 
         rvSongs.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SongAdapter(filteredList, song -> {
-            Intent i = new Intent(this, PlayerService.class);
-            i.putExtra("title", song.getTitle());
-            i.putExtra("artist", song.getArtist());
-            i.putExtra("path", song.getPath());
-            i.putExtra("sessionId", audioSessionId);
-            startService(i);
-            miniTitle.setText(song.getTitle());
-            miniArtist.setText(song.getArtist());
+        // Fix lambda incompatible - usamos clase anónima tipada
+        adapter = new SongAdapter(filteredList, new SongAdapter.OnSongClickListener() {
+            @Override
+            public void onSongClick(Song song) {
+                Intent i = new Intent(MainActivity.this, PlayerService.class);
+                i.putExtra("title", song.getTitle());
+                i.putExtra("artist", song.getArtist());
+                i.putExtra("path", song.getPath());
+                startService(i);
+                miniTitle.setText(song.getTitle());
+                miniArtist.setText(song.getArtist());
+            }
         });
         rvSongs.setAdapter(adapter);
 
@@ -85,25 +88,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void initAudioEffects(){
         try {
-            if(audioSessionId==0) audioSessionId = 0;
-            mEqualizer = new Equalizer(0, audioSessionId);
+            mEqualizer = new Equalizer(0, 0);
             mEqualizer.setEnabled(true);
             if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P){
-                mDynamics = new DynamicsProcessing(0, audioSessionId,
-                    new DynamicsProcessing.Config.Builder(0, 2, true, 32, true, 5, true, 5, true).build());
+                DynamicsProcessing.Config.Builder builder = new DynamicsProcessing.Config.Builder(
+                    DynamicsProcessing.VARIANT_FAVOR_FREQUENCY_RESOLUTION,
+                    2, true, 32, true, 5, true, 5, true);
+                mDynamics = new DynamicsProcessing(0, 0, builder.build());
                 mDynamics.setEnabled(true);
             }
         } catch(Exception e){ e.printStackTrace(); }
     }
 
-    // --- ESTO ES LO QUE TE PIDE MDRCAdapter ---
+    // ESTE ES EL MDRC REAL - ya no usa getBandByChannelIndex que no existe
     public void setMDRCParam(int band, String param, float val){
         try {
             if(mDynamics==null) return;
             DynamicsProcessing.Config cfg = mDynamics.getConfig();
             DynamicsProcessing.Channel ch = cfg.getChannelByChannelIndex(0);
             DynamicsProcessing.Mbc mbc = ch.getMbc();
-            DynamicsProcessing.MbcBand b = mbc.getBandByChannelIndex(band);
+            if(mbc==null) return;
+            DynamicsProcessing.MbcBand b = mbc.getBand(band);
+            if(b==null) return;
             switch(param){
                 case "gain": b.setPostGain(val); break;
                 case "threshold": b.setThreshold(val); break;
@@ -116,13 +122,11 @@ public class MainActivity extends AppCompatActivity {
         } catch(Exception e){ e.printStackTrace(); }
     }
 
-    // --- ESTO ES LO QUE TE PIDE Eq32Adapter ---
     public void setBandGain(int position, float gain){
         try {
             if(mEqualizer!=null){
-                short band = (short) position;
                 short level = (short) (gain * 100);
-                mEqualizer.setBandLevel(band, level);
+                mEqualizer.setBandLevel((short)position, level);
             }
         } catch(Exception e){ e.printStackTrace(); }
     }
@@ -149,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     songList.add(s);
                 }
             }
-        }
+        } catch(Exception e){ e.printStackTrace(); }
         filteredList.clear();
         filteredList.addAll(songList);
         if(adapter!=null) adapter.notifyDataSetChanged();
