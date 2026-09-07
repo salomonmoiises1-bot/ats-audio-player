@@ -5,7 +5,7 @@
  android:orientation="vertical"
  android:padding="16dp"
  android:background="#121212">
-<ImageView android:id="@+id/btnBack" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_back"/>
+<ImageView android:id="@+id/btnBack" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_menu_revert"/>
 <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#FFF" android:textSize="20sp" android:textStyle="bold" android:gravity="center" android:text="Title" android:layout_marginTop="16dp"/>
 <TextView android:id="@+id/tvArtist" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#AAA" android:gravity="center" android:text="Artist"/>
 <SeekBar android:id="@+id/seekBar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp"/>
@@ -14,8 +14,8 @@
 <TextView android:id="@+id/tvTotalTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF" android:text="00:00"/>
 </LinearLayout>
 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center" android:layout_marginTop="24dp">
-<ImageView android:id="@+id/btnPrev" android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/ic_skip_previous"/>
-<ImageView android:id="@+id/btnPlayPause" android:layout_width="80dp" android:layout_height="80dp" android:src="@drawable/ic_play" android:layout_marginHorizontal="16dp"/>
-<ImageView android:id="@+id/btnNext" android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/ic_skip_next"/>
+<ImageView android:id="@+id/btnPrev" android:layout_width="64dp" android:layout_height="64dp" android:src="@android:drawable/ic_media_previous"/>
+<ImageView android:id="@+id/btnPlayPause" android:layout_width="80dp" android:layout_height="80dp" android:src="@android:drawable/ic_media_play" android:layout_marginHorizontal="16dp"/>
+<ImageView android:id="@+id/btnNext" android:layout_width="64dp" android:layout_height="64dp" android:src="@android:drawable/ic_media_next"/>
 </LinearLayout>
 </LinearLayout>
